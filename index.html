@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="source/style.css">
+    <title>TO DO LIST</title>
+</head>
+<body >
+    <div class="wrapper" id="app">
+    <header>
+        <h1 class="header__title">
+            TO DO LIST
+        </h1>
+        <menu class="header__menu">
+            <div class="menu__burger" 
+                 @pointerup="burgerActive = !burgerActive"
+                 :class="{'_active': burgerActive}">
+                <span ></span>
+            </div>
+            <div class="menu__wrapper__ul"
+                 :class="{'_openWrapper': burgerActive}">
+            <ul class="menu__ul" id="ulMenu"
+                :class="{'_open': burgerActive}">
+                <li
+                v-for="btn in menuBtn"
+                :class="{'activeBtn': btn.classBtn == 'commonList'}"
+                >
+                <a :href="btn.link">{{btn.name}}</a> 
+                </li>
+            </ul>
+        </div>
+        </menu>
+    </header>
+    <aside class="aside_main" :class="{'_visible': burgerActive}">
+        <h2 class="aside_main__title">
+            Добавьте задачу!
+        </h4>
+        <input class="aside_main__input" @keydown.enter="addTask" v-model="currentTask" type="text">
+        <button class="aside_main__push" @pointerup="addTask">Добавить</button>
+
+    </aside>
+    <main id="main">
+    <section class="main__commonList">
+        <ul class="main_commonList__ul main_ul">
+            <li 
+            v-for="task in tasks"  
+            :class="{'strike': task.isComplete}">
+            <img @pointerup="task.starActive = !task.starActive; toggleActive" :class="{'active': task.starActive}"  src="image/star.png" alt="button for important">
+            <img @pointerup="task.starActive = !task.starActive" :class="{'active': !task.starActive}" src="image/star-active.png" alt="button for important active">
+           <span @pointerup="task.isComplete = !task.isComplete" >
+               {{task.text}}
+            </span>
+           <button @pointerdown="removeText(task.text)">X</button>
+            </li>
+        </ul>
+    </section>
+   </main>
+  ,<!-- <aside class="aside_right"></aside> --> 
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
